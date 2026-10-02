@@ -11,7 +11,7 @@ const THREAT_PATTERNS = [
     name: 'Urgency & Pressure Tactics',
     severity: 'HIGH',
     keywords: [
-      'urgent', 'immediately', 'within 24 hours', 'within 12 hours', 'within 1 hour', 
+      'urgent', 'immediately', 'within 24 hours', 'within 12 hours', 'within 1 hour',
       'account suspended', 'suspended immediately', 'action required', 'final notice',
       'legal action', 'lawsuit', 'warrant', 'terminate', 'deactivated', 'expire today',
       'act fast', 'limited time', 'dont delay', 'response needed'
@@ -96,7 +96,7 @@ const TYPOSQUATTING_TARGETS = [
 export function analyzeContent(inputContent, inputType = 'text', customUrl = '') {
   const text = (inputContent || '').trim();
   const urlToTest = (customUrl || extractFirstUrl(text) || '').trim();
-  
+
   if (!text && !urlToTest) {
     return null;
   }
@@ -104,7 +104,7 @@ export function analyzeContent(inputContent, inputType = 'text', customUrl = '')
   let baseScore = 100;
   const triggers = [];
   const textLower = text.toLowerCase();
-  
+
   // 1. Analyze Text Patterns
   THREAT_PATTERNS.forEach(pattern => {
     const matchedKeywords = [];
@@ -135,7 +135,7 @@ export function analyzeContent(inputContent, inputType = 'text', customUrl = '')
   let urlAnalysis = null;
   if (urlToTest) {
     urlAnalysis = analyzeUrlDetails(urlToTest);
-    
+
     // Deduct score based on URL risks
     if (!urlAnalysis.isHttps) {
       baseScore -= 12;
@@ -218,7 +218,7 @@ export function analyzeContent(inputContent, inputType = 'text', customUrl = '')
 
   // 3. Overall Score Bounds & Classification
   const finalScore = Math.max(0, Math.min(100, Math.round(baseScore)));
-  
+
   let riskLevel = 'SAFE';
   let riskColor = '#10B981'; // Green
   let riskBadge = 'Safe / Low Risk';
@@ -289,7 +289,7 @@ export function analyzeUrlDetails(urlStr) {
   const hostname = parsed.hostname.toLowerCase();
   const isHttps = parsed.protocol === 'https:';
   const isIpAddress = /^(\d{1,3}\.){3}\d{1,3}$/.test(hostname);
-  
+
   // Extract TLD
   const domainParts = hostname.split('.');
   const tld = domainParts.length > 1 ? '.' + domainParts[domainParts.length - 1] : '';

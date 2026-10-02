@@ -339,7 +339,7 @@ ${scanResult.recommendations.map(r => `- ${r.title}: ${r.detail}`).join('\n')}`;
 
                 {/* Verdict Info */}
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px', flexWrap: 'wrap' }}>
                     <span 
                       className="badge" 
                       style={{ 
@@ -351,6 +351,12 @@ ${scanResult.recommendations.map(r => `- ${r.title}: ${r.detail}`).join('\n')}`;
                       {scanResult.riskLevel === 'HIGH_RISK' ? <ShieldAlert size={14} /> : scanResult.riskLevel === 'MEDIUM_RISK' ? <AlertTriangle size={14} /> : <ShieldCheck size={14} />}
                       {scanResult.riskBadge}
                     </span>
+
+                    {scanResult.isLegitimateOfficialDomain && (
+                      <span className="badge badge-safe" style={{ background: 'rgba(16, 185, 129, 0.25)', borderColor: '#10B981', color: '#34D399' }}>
+                        <CheckCircle2 size={13} color="#34D399" /> Official {scanResult.officialBrandMatched} Verified Domain
+                      </span>
+                    )}
                     
                     <span style={{ fontSize: '0.8rem', color: 'var(--text-sub)' }}>
                       Evaluated {scanResult.formattedDate}
