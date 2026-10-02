@@ -57,7 +57,7 @@ export default function ThreatAnalyzer({ onSaveScan, initialInput = '' }) {
           onSaveScan(result);
         }
       }
-    }, 450);
+    }, 120);
   };
 
   const handlePresetSelect = (preset) => {
